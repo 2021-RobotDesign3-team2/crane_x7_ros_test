@@ -1,15 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import rospy
-import moveit_commander
-import actionlib
-import math
-import random
-from geometry_msgs.msg import Point, Pose
-from gazebo_msgs.msg import ModelStates
-from control_msgs.msg import GripperCommandAction, GripperCommandGoal
-from tf.transformations import quaternion_from_euler, euler_from_quaternion
+import rospy			#pyhonでROSを使用するときに使う
+import moveit_commander		#pyhonを使ってC++nのMoveGrouplanterfaceを呼び出す
+import actionlib		#命令を送信して返信してもらう通信方法
+import math			#数学的な計算をしてもらうのに役立つモジュール
+import random			#乱数を生成
+from geometry_msgs.msg import Point, Pose						#点やベクトル、ポーズなどのメッセージを提供
+from gazebo_msgs.msg import ModelStates							#ROSからGazeboを操作するためのメッセージとサービスの構造
+from control_msgs.msg import GripperCommandAction, GripperCommandGoal			#コントローラーのセットポイントや関節軌道、カルテシアン軌道の表現を提供
+from tf.transformations import quaternion_from_euler, euler_from_quaternion		#オイラー角とクォータニオンの相互変換
 
 gazebo_model_states = ModelStates()
 
