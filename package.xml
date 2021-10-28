@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>hand_test</name>
+  <name>crane_x7_ros_test</name>
   <version>0.0.0</version>
   <description>The hand_test package</description>
 
@@ -31,11 +31,20 @@
   <build_depend>rospy</build_depend>
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>rospy</exec_depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf</depend>
+  <depend>gazebo_ros</depend>
+  <exec_depend>gazebo</exec_depend>
+  <exec_depend>turtlebot3_description</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <!-- Other tools can request additional information be placed here -->
-
+    <gazebo_ros gazebo_media_path="${prefix}"/>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
   </export>
 </package>

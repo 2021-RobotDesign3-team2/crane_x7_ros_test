@@ -17,14 +17,12 @@
       <!-- X7を机の端に配置するため、机を移動、回転する -->
       <pose>0.29 0 0 0 0 1.5708</pose>
     </model>
-
-    <model name="flypan">
-      <include>
-        <uri>model://flypan</uri>
-      </include>
-
-      <pose>0.20 0 1.0 0 0 0</pose>
-    </model>
+  <model name="flypan">
+    <include>
+      <uri>model://flypan</uri>
+    </include>
+    <pose>0.35 -0.01 1.0 0 0 83</pose>
+  </model>
 
     <model name="ground_plane">
       <include>
