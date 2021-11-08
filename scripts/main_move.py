@@ -53,7 +53,7 @@ class ArmJointTrajectoryExample(object):
             sys.exit(1)
 
     def go(self):
-        #ここから薙ぎ払いの動作
+        #フライ返しの流れ
         point = JointTrajectoryPoint()
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
@@ -80,7 +80,7 @@ class ArmJointTrajectoryExample(object):
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
         
-        joint_values = [0.0, math.radians(-70), 0.0, 0.0, 0.0, 0.0, math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-20), math.radians(-90)] #角度指定部
 
         for i, p in enumerate(joint_values):
             point.positions.append(p)
@@ -90,13 +90,29 @@ class ArmJointTrajectoryExample(object):
         self._client.send_goal(goal)
         self._client.wait_for_result(timeout=rospy.Duration(100.0))
 
-        #rospy.sleep(1)
+        rospy.sleep(1)
 
         point = JointTrajectoryPoint()
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
         
-        joint_values = [0.0, math.radians(-40), 0.0, math.radians(-70), 0.0, math.radians(-18), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
+
+        for i, p in enumerate(joint_values):
+            point.positions.append(p)
+        
+        point.time_from_start = rospy.Duration(secs=1.3)
+        goal.trajectory.points.append(point)
+        self._client.send_goal(goal)
+        self._client.wait_for_result(timeout=rospy.Duration(100.0))
+
+        rospy.sleep(1)
+        
+        point = JointTrajectoryPoint()
+        goal = FollowJointTrajectoryGoal()
+        goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
+        
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
 
         for i, p in enumerate(joint_values):
             point.positions.append(p)
@@ -110,12 +126,12 @@ class ArmJointTrajectoryExample(object):
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
         
-        joint_values = [0.0, math.radians(-70), 0.0, math.radians(-50), 0.0, math.radians(55), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-30), math.radians(-90)] #角度指定部
 
         for i, p in enumerate(joint_values):
             point.positions.append(p)
         
-        point.time_from_start = rospy.Duration(secs=1.3)
+        point.time_from_start = rospy.Duration(secs=0.2)
         goal.trajectory.points.append(point)
         self._client.send_goal(goal)
         self._client.wait_for_result(timeout=rospy.Duration(100.0))
@@ -124,7 +140,7 @@ class ArmJointTrajectoryExample(object):
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
         
-        joint_values = [0.0, math.radians(-70), 0.0, math.radians(-50), 0.0, math.radians(20), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-75), math.radians(-90)] #角度指定部
 
         for i, p in enumerate(joint_values):
             point.positions.append(p)
