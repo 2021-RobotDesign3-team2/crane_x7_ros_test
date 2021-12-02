@@ -1,15 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import rospy			#pyhonでROSを使用するときに使う
-import moveit_commander		#pyhonを使ってC++nのMoveGrouplanterfaceを呼び出す
-import actionlib		#命令を送信して返信してもらう通信方法
-import math			#数学的な計算をしてもらうのに役立つモジュール
-import random			#乱数を生成
-from geometry_msgs.msg import Point, Pose						#点やベクトル、ポーズなどのメッセージを提供
-from gazebo_msgs.msg import ModelStates							#ROSからGazeboを操作するためのメッセージとサービスの構造
-from control_msgs.msg import GripperCommandAction, GripperCommandGoal			#コントローラーのセットポイントや関節軌道、カルテシアン軌道の表現を提供
-from tf.transformations import quaternion_from_euler, euler_from_quaternion		#オイラー角とクォータニオンの相互変換
+import rospy
+import moveit_commander
+import actionlib
+import math
+import random
+from geometry_msgs.msg import Point, Pose
+from gazebo_msgs.msg import ModelStates
+from control_msgs.msg import GripperCommandAction, GripperCommandGoal
+from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 gazebo_model_states = ModelStates()
 
@@ -30,12 +30,12 @@ def yaw_of(object_orientation):
 def main():
     global gazebo_model_states
 
-    OBJECT_NAME = "wood_cube_5cm"   # 掴むオブジェクトの名前
+    OBJECT_NAME = "flypan"   # 掴むオブジェクトの名前
     GRIPPER_OPEN = 1.2              # 掴む時のハンド開閉角度
-    GRIPPER_CLOSE = 0.42            # 設置時のハンド開閉角度
+    GRIPPER_CLOSE = 0.42           # 設置時のハンド開閉角度
     APPROACH_Z = 0.15               # 接近時のハンドの高さ
     LEAVE_Z = 0.20                  # 離れる時のハンドの高さ
-    PICK_Z = 0.12                   # 掴む時のハンドの高さ
+    PICK_Z = 0.11                   # 掴む時のハンドの高さ
     PLACE_POSITIONS = [             # オブジェクトの設置位置 (ランダムに設置する)
             Point(0.4, 0.0, 0.0),
             Point(0.0, 0.3, 0.0),
@@ -83,7 +83,7 @@ def main():
 
             # オブジェクトに接近する
             target_pose = Pose()
-            target_pose.position.x = object_position.x
+            target_pose.position.x = 0.37
             target_pose.position.y = object_position.y
             target_pose.position.z = APPROACH_Z
             q = quaternion_from_euler(-math.pi, 0.0, object_yaw)
@@ -114,7 +114,7 @@ def main():
             if arm.go() is False:
                 print("Failed to pick up an object.")
                 continue
-            rospy.sleep(1.0)
+            rospy.sleep(3.0)
             
             # 設置位置に移動する
             place_position = random.choice(PLACE_POSITIONS) # 設置位置をランダムに選択する
