@@ -27,9 +27,31 @@ class ImageConvert:
             cv_image_color = self.bridge.imgmsg_to_cv2(topic, "bgr8")
         except CvBridgeError as e:
             print(e)
-        #cv_image_color_2 = cv2.resize(cv_image_color, (640, 360))
+        
+        hsv_image = cv2.cvtColor(cv_image_color, cv2.COLOR_BGR2HSV)
+
+        bule_min = np.array([90, 100, 0])
+        bule_max = np.array([150, 255, 255])
+
+        flypan_mask = cv2.inRange(hsv_image, bule_min, bule_max)
+
+        cv_image_2 = cv2.bitwise_and(cv_image_color, cv_image_color, mask = flypan_mask)
+
+        gray_image = cv2.cvtColor(cv_image_2, cv2.COLOR_BGR2GRAY)
+
+        ret, thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_OTSU)
+
+        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        contours = list(filter(lambda x: cv2.contourArea(x) > 100, contours))
+
+        cv2.drawContours(hsv_image, contours, -1, color=(0, 0, 255), thickness=6)
+
         rospy.loginfo('subscribed_image_color')
-        self.show(cv_image_color)
+        #self.show(hsv_image)
+        cv2.imshow("image", cv_image_color)
+        cv2.imshow("aaaa", hsv_image)
+        cv2.waitKey(3)
         
     def show(self, image):
         cv2.imshow("image", image)
