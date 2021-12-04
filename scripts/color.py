@@ -32,7 +32,6 @@ class ImageConvert:
 
         bule_min = np.array([90, 100, 0])
         bule_max = np.array([150, 255, 255])
-
         flypan_mask = cv2.inRange(hsv_image, bule_min, bule_max)
 
         cv_image_2 = cv2.bitwise_and(cv_image_color, cv_image_color, mask = flypan_mask)
@@ -43,15 +42,17 @@ class ImageConvert:
 
         contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-        contours = list(filter(lambda x: cv2.contourArea(x) > 100, contours))
+        contours = list(filter(lambda x: cv2.contourArea(x) > 5000, contours))
 
         cv2.drawContours(hsv_image, contours, -1, color=(0, 0, 255), thickness=6)
 
-        rospy.loginfo('subscribed_image_color')
-        #self.show(hsv_image)
-        cv2.imshow("image", cv_image_color)
-        cv2.imshow("aaaa", hsv_image)
-        cv2.waitKey(3)
+        coordinates = cv2.moments(contours[0])
+        x = int(coordinates["m10"]/coordinates["m00"])
+        y = int(coordinates["m01"]/coordinates["m00"])
+        print("x:", x, "y:", y)
+        cv2.rectangle(hsv_image, (x + 10, y + 10), (x -10, y - 10), (255, 255, 0), thickness = 6)
+
+        self.show(hsv_image)
         
     def show(self, image):
         cv2.imshow("image", image)
