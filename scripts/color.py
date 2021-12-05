@@ -54,8 +54,8 @@ class ImageConvert:
         x = int(coordinates["m10"]/coordinates["m00"])
         y = int(coordinates["m01"]/coordinates["m00"])
         print("move_x:", 320 - x, "move_y:", 240 - y)
-        #rate = rospy.Rate(2)
-        #list = [320 -x, 240 -y]
+        rate = rospy.Rate(100)
+        rate.sleep()
         self.publisher_hsv_image_x.publish(320 -x)
         self.publisher_hsv_image_y.publish(240 - y)
 
