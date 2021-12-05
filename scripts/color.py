@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 from rospy.topics import Subscriber
 from sensor_msgs import msg
+from std_msgs.msg import Int32, Float32
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
@@ -14,6 +15,9 @@ class ImageConvert:
     def __init__(self):
         self.bridge = CvBridge()
         self.subscribed_image_color = rospy.Subscriber("/camera/color/image_raw", Image, self.color_callback_and_convert)
+        self.publisher_hsv_image_x = rospy.Publisher("subscribed_image_color_x", Float32)
+        self.publisher_hsv_image_y = rospy.Publisher("subscribed_image_color_y", Float32)
+
 
     def main(self):
         try:
@@ -49,10 +53,17 @@ class ImageConvert:
         coordinates = cv2.moments(contours[0])
         x = int(coordinates["m10"]/coordinates["m00"])
         y = int(coordinates["m01"]/coordinates["m00"])
-        print("x:", x, "y:", y)
+        print("move_x:", 320 - x, "move_y:", 240 - y)
+        #rate = rospy.Rate(2)
+        #list = [320 -x, 240 -y]
+        self.publisher_hsv_image_x.publish(320 -x)
+        self.publisher_hsv_image_y.publish(240 - y)
+
         cv2.rectangle(hsv_image, (x + 10, y + 10), (x -10, y - 10), (255, 255, 0), thickness = 6)
 
         self.show(hsv_image)
+
+        #rate.sleep()
         
     def show(self, image):
         cv2.imshow("image", image)

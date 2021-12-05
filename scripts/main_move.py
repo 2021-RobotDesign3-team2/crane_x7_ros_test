@@ -7,7 +7,8 @@ import actionlib
 import moveit_commander
 import geometry_msgs.msg
 from std_msgs.msg import Float64
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, Float32
+import message_filters
 import rosnode
 from tf.transformations import quaternion_from_euler
 
@@ -31,12 +32,12 @@ import copy
 
 finish = True
 global Once_flag_nagi
+global SEARCH_MODE
 
 class ArmJointTrajectoryExample(object):
     def __init__(self):
+        self._client = actionlib.SimpleActionClient("/crane_x7/arm_controller/follow_joint_trajectory", FollowJointTrajectoryAction)
 
-        self._client = actionlib.SimpleActionClient(
-            "/crane_x7/arm_controller/follow_joint_trajectory", FollowJointTrajectoryAction)
         rospy.sleep(0.1)
         if not self._client.wait_for_server(rospy.Duration(secs=5)):
             rospy.logerr("Action Server Not Found")
@@ -91,7 +92,16 @@ class ArmJointTrajectoryExample(object):
         self._client.wait_for_result(timeout=rospy.Duration(100.0))
 
         rospy.sleep(1)
+    
+    def search_mode(self):
+        #global SEARCH_MODE
+        #SEARCH_MODE = True
+        sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
+        sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
+        sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
+        sub_n.registerCallback(sub)
 
+    def go_2(self):
         point = JointTrajectoryPoint()
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
@@ -188,15 +198,30 @@ class ArmJointTrajectoryExample(object):
     def feedback(self,msg):
         print("feedback callback")
 
-def sub(data):
+def sub(topic_x, topic_y):
     global Once_flag_nagi
-    if data.data == 4 and Once_flag_nagi:
+    #global SEARCH_MODE
+    print("x:", topic_x, "y:", topic_y)
+    arm_joint_trajectory_example = ArmJointTrajectoryExample()
+    if Once_flag_nagi:
         Once_flag_nagi = False
-        arm_joint_trajectory_example = ArmJointTrajectoryExample()
-        arm_joint_trajectory_example.go()
+        #arm_joint_trajectory_example.go()
+        print("search!")
+        arm_joint_trajectory_example.search_mode()
+    #if SEARCH_MODE and topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
+    #elif Once_flag_nagi and topic_y > 10:
+    #    arm_joint_trajectory_example.go_2()
 
 if __name__ == "__main__":
     Once_flag_nagi = True
+    SEARCH_MODE = False
     rospy.init_node("nagi_uda")
-    rospy.Subscriber("activate_node",Int32,sub,queue_size = 1);
+    print ("gooo")
+    sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
+    sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
+    print("hi")
+    sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
+    print("hiiiii")
+    sub_n.registerCallback(sub)
+    #sub(0,0)
     rospy.spin()
