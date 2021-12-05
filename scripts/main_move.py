@@ -94,8 +94,8 @@ class ArmJointTrajectoryExample(object):
         rospy.sleep(1)
     
     def search_mode(self):
-        #global SEARCH_MODE
-        #SEARCH_MODE = True
+        global SEARCH_MODE
+        SEARCH_MODE = True
         sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
         sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
         sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
@@ -199,29 +199,25 @@ class ArmJointTrajectoryExample(object):
         print("feedback callback")
 
 def sub(topic_x, topic_y):
-    global Once_flag_nagi
-    #global SEARCH_MODE
-    print("x:", topic_x, "y:", topic_y)
     arm_joint_trajectory_example = ArmJointTrajectoryExample()
-    if Once_flag_nagi:
-        Once_flag_nagi = False
-        #arm_joint_trajectory_example.go()
-        print("search!")
-        arm_joint_trajectory_example.search_mode()
-    #if SEARCH_MODE and topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
-    #elif Once_flag_nagi and topic_y > 10:
-    #    arm_joint_trajectory_example.go_2()
+    global Once_flag_nagi
+    print("x:", topic_x.data, "y:", topic_y.data)
+    if SEARCH_MODE and topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
+        arm_joint_trajectory_example.go_2()
 
-if __name__ == "__main__":
+def main():
+    arm_joint_trajectory_example = ArmJointTrajectoryExample()
+    global Once_flag_nagi
+    global SEARCH_MODE
     Once_flag_nagi = True
     SEARCH_MODE = False
+    if Once_flag_nagi:
+        Once_flag_nagi = False
+        arm_joint_trajectory_example.go()
+        print("search!")
+        arm_joint_trajectory_example.search_mode()
+
+if __name__ == "__main__":
     rospy.init_node("nagi_uda")
-    print ("gooo")
-    sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
-    sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
-    print("hi")
-    sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
-    print("hiiiii")
-    sub_n.registerCallback(sub)
-    #sub(0,0)
+    main()
     rospy.spin()
