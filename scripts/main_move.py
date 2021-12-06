@@ -90,17 +90,10 @@ class ArmJointTrajectoryExample(object):
     def search_mode(self):
         global SEARCH_MODE
         SEARCH_MODE = True
-        rate = rospy.Rate(100)
-        rate.sleep()
-        self.publisher_arm_status.publish(1.0)
-        if SEARCH_MODE:
-            sub_x = message_filters.Subscriber("subscribed_x", Float32)
-            sub_y = message_filters.Subscriber("subscribed_y", Float32)
-            sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
-            sub_n.registerCallback(self.flypan_search)
-            print("OOOOOOOOOOOOOOOOOOOO")
-        else:
-            pass
+        sub_x = message_filters.Subscriber("subscribed_image_color_x", Float32)
+        sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
+        sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 100, 0.1, allow_headerless=True)
+        sub_n.registerCallback(self.flypan_search)
 
     def flypan_search(self, topic_x, topic_y):
         global joint_values
@@ -111,20 +104,14 @@ class ArmJointTrajectoryExample(object):
         theta_y = topic_y.data / 10
 
         print("x:", topic_x.data, "y:", topic_y.data)
-#-------------------------
-        arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
-#-------------------------
+
         if topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
             self.go_2()
         elif topic_x.data <= -10 or topic_x >= 10:
             print("NAAAAAAAAAAAAAAAA")
             self.setup()
             joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-95), math.radians(-90 + theta)] #角度指定部
-            self.setup2(0.1, 100.0, 0)
-#------------------------------------            
-            #arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
-#------------------------------------
-            #self.search_mode()
+            self.setup2(0.5, 100.0, 0) #このモーションの再生時間を変えるならcolor.pyの時間も変える
 
     def go_2(self):
         global joint_values
@@ -175,9 +162,6 @@ def main():
     SEARCH_MODE = False
     if Once_flag_nagi:
         Once_flag_nagi = False
-#--------------------------
-        #arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
-#--------------------------
         arm_joint_trajectory_example.go()
         print("search!")
         arm_joint_trajectory_example.search_mode()

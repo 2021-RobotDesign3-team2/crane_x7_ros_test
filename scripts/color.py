@@ -5,9 +5,9 @@ import sys
 import rospy
 import numpy as np
 import cv2
-from rospy.topics import Subscriber
-from sensor_msgs import msg
-from std_msgs.msg import Int32, Float32
+#from rospy.topics import Subscriber
+#from sensor_msgs import msg
+from std_msgs.msg import Float32
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
@@ -55,8 +55,9 @@ class ImageConvert(object):
         x = int(coordinates["m10"]/coordinates["m00"])
         y = int(coordinates["m01"]/coordinates["m00"])
         print("move_x:", 320 - x, "move_y:", 240 - y)
-        rate = rospy.Rate(100)
+        rate = rospy.Rate(1000)
         rate.sleep()
+        rospy.sleep(0.5) #same time searchmode in main_move.py
         self.publisher_hsv_image_x.publish(320 -x)
         self.publisher_hsv_image_y.publish(240 - y)
 
