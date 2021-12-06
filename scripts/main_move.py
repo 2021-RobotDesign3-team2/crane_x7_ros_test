@@ -37,6 +37,7 @@ global SEARCH_MODE
 class ArmJointTrajectoryExample(object):
     def __init__(self):
         self._client = actionlib.SimpleActionClient("/crane_x7/arm_controller/follow_joint_trajectory", FollowJointTrajectoryAction)
+        self.publisher_arm_status = rospy.Publisher("subscribed_arm_status", Float32, queue_size=10)
 
         rospy.sleep(0.1)
         if not self._client.wait_for_server(rospy.Duration(secs=5)):
@@ -84,17 +85,20 @@ class ArmJointTrajectoryExample(object):
         print("SEARCH!!")      
         joint_values = [0.0, math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
         self.setup2(1.3, 100.0, 3)
+        print("READY???")
         
     def search_mode(self):
         global SEARCH_MODE
         SEARCH_MODE = True
         rate = rospy.Rate(100)
         rate.sleep()
+        self.publisher_arm_status.publish(1.0)
         if SEARCH_MODE:
-            sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
-            sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
+            sub_x = message_filters.Subscriber("subscribed_x", Float32)
+            sub_y = message_filters.Subscriber("subscribed_y", Float32)
             sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
             sub_n.registerCallback(self.flypan_search)
+            print("OOOOOOOOOOOOOOOOOOOO")
         else:
             pass
 
@@ -103,28 +107,24 @@ class ArmJointTrajectoryExample(object):
         global Once_flag_nagi
         global theta
         arm_joint_trajectory_example = ArmJointTrajectoryExample()
-        theta = math.degrees(math.atan(topic_y.data / topic_x.data))
+        theta = -1 * math.degrees(math.atan(topic_y.data / topic_x.data))
         theta_y = topic_y.data / 10
 
         print("x:", topic_x.data, "y:", topic_y.data)
-
+#-------------------------
+        arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
+#-------------------------
         if topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
-            arm_joint_trajectory_example.go_2()
-            '''
+            self.go_2()
         elif topic_x.data <= -10 or topic_x >= 10:
-            print("UOOOOOOOOOOOOO")
-            self.setup()
-            joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-95), math.radians(-90 + theta)] #角度指定部
-            self.setup2(1.0, 100.0, 0)
-            arm_joint_trajectory_example.go_2()
-            '''
-        elif topic_y <= -10 or topic_y >= 10:
             print("NAAAAAAAAAAAAAAAA")
             self.setup()
-            joint_values = [math.radians(theta), math.radians(-20 + theta_y), 0.0, math.radians(-80 + theta_y), 0.0, math.radians(-95 + theta_y), math.radians(-90 + theta)] #角度指定部
-            self.setup2(1.0, 100.0, 0)
-            arm_joint_trajectory_example.go_2()
-
+            joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-95), math.radians(-90 + theta)] #角度指定部
+            self.setup2(0.1, 100.0, 0)
+#------------------------------------            
+            #arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
+#------------------------------------
+            #self.search_mode()
 
     def go_2(self):
         global joint_values
@@ -156,7 +156,11 @@ class ArmJointTrajectoryExample(object):
 
         self.setup()        
         joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90)] #角度指定部
-        self.setup2(2.0, 100.0, 1)
+        self.setup2(1.0, 100.0, 1)
+
+        self.setup()        
+        joint_values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #角度指定部
+        self.setup2(1.0, 100.0, 1)
 
         return self._client.get_result()
 
@@ -171,6 +175,9 @@ def main():
     SEARCH_MODE = False
     if Once_flag_nagi:
         Once_flag_nagi = False
+#--------------------------
+        #arm_joint_trajectory_example.publisher_arm_status.publish(1.0)
+#--------------------------
         arm_joint_trajectory_example.go()
         print("search!")
         arm_joint_trajectory_example.search_mode()
