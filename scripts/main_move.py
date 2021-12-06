@@ -82,8 +82,8 @@ class ArmJointTrajectoryExample(object):
 
         self.setup()
         print("SEARCH!!")      
-        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90)] #角度指定部
-        self.setup2(1.3, 100.0, 1)
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
+        self.setup2(1.3, 100.0, 3)
         
     def search_mode(self):
         global SEARCH_MODE
@@ -93,43 +93,47 @@ class ArmJointTrajectoryExample(object):
         if SEARCH_MODE:
             sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
             sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
-            rospy.sleep(0.01)
-            n_sub_x = message_filters.Subscriber("subscribed_image_color_x",Float32)
-            n_sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
-            rate.sleep()
-            sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y, n_sub_x, n_sub_y], 10, 0.1, allow_headerless=True)
+            sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 10, 0.1, allow_headerless=True)
             sub_n.registerCallback(self.flypan_search)
         else:
             pass
 
-    def flypan_search(self, topic_x, topic_y, n_topic_x, n_topic_y):
+    def flypan_search(self, topic_x, topic_y):
         global joint_values
         global Once_flag_nagi
+        global theta
         arm_joint_trajectory_example = ArmJointTrajectoryExample()
         theta = math.degrees(math.atan(topic_y.data / topic_x.data))
-        n_x = topic_x.data - n_topic_x.data
-        n_y = topic_y.data - n_topic_y.data
-        r_x = n_x - topic_x.data
-        r_y = n_y
+        theta_y = topic_y.data / 10
 
-        print("x:", topic_x.data, "y:", topic_y.data, "f", n_topic_x.data, "v", n_topic_y)
+        print("x:", topic_x.data, "y:", topic_y.data)
 
         if topic_x.data > -10 and topic_x.data < 10 and topic_y.data > -10 and topic_y.data < 10:
             arm_joint_trajectory_example.go_2()
-        elif n_x > -5 and n_x < 5 and n_y > -5 and n_y < 5:
-            print("CANCEL!!")
-        elif n_x > 30 or n_x < -30 or n_y > 30 or n_y < -30:
-            print("ERROR")
-        else:
+            '''
+        elif topic_x.data <= -10 or topic_x >= 10:
             print("UOOOOOOOOOOOOO")
             self.setup()
-            joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90 + theta)] #角度指定部
+            joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-80), 0.0, math.radians(-95), math.radians(-90 + theta)] #角度指定部
             self.setup2(1.0, 100.0, 0)
-            pass
+            arm_joint_trajectory_example.go_2()
+            '''
+        elif topic_y <= -10 or topic_y >= 10:
+            print("NAAAAAAAAAAAAAAAA")
+            self.setup()
+            joint_values = [math.radians(theta), math.radians(-20 + theta_y), 0.0, math.radians(-80 + theta_y), 0.0, math.radians(-95 + theta_y), math.radians(-90 + theta)] #角度指定部
+            self.setup2(1.0, 100.0, 0)
+            arm_joint_trajectory_example.go_2()
 
 
     def go_2(self):
         global joint_values
+
+        self.setup()
+        print("GO!!")
+        joint_values = [math.radians(theta), math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90 + theta)] #角度指定部
+        self.setup2(1.3, 100.0, 1)
+
         self.setup()
         print("PICKUP!!")
         joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
