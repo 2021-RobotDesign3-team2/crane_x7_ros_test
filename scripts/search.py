@@ -12,42 +12,35 @@ import rosnode
 from tf.transformations import quaternion_from_euler
 from std_msgs.msg import Float32
 import message_filters
+import os
 
 class SEARCH(object):
     def __init__(self):
-        self.publisher_arm_status = rospy.Publisher("subscribed_arm_status", Float32)
         sub_x = message_filters.Subscriber("subscribed_image_color_x", Float32)
         sub_y = message_filters.Subscriber("subscribed_image_color_y", Float32)
         sub_n = message_filters.ApproximateTimeSynchronizer([sub_x, sub_y], 100, 0.1, allow_headerless=True)
         sub_n.registerCallback(self.get)
 
     def get(self, topic_x, topic_y):
-        self.publisher_arm_status.publish(1.0)
         print(topic_x.data, topic_y.data)
         global robot, arm, flag
-        #SRDFに定義されている"home"の姿勢にする
         f_x = round((0.1 * topic_x.data) / 150, 4)
         f_y = round((0.1 * topic_y.data) / 150, 4)
         print(f_x, f_y)
-        #print("HHHUUUUUUUUUUU")
-        #flag = True
         if flag:
             flag = False
             print("GOGO!!")
-            #hand(0.5, 0.8)
             setup(0.3, 0.2+f_y, 0.0+f_x, 0.3)#OK
             setup(0.3, 0.2+f_y, 0.0+f_x, 0.1)#OK
             hand(0.1, 0.1)
-            self.publisher_arm_status.publish(1.0)
-            #setup(0.3, 0.2, 0.0, 0.3)
+            os.popen("rosrun crane_x7_ros_test main_move.py")
         else:
             pass
         print("done")
 
 def main():
-    global arm, gripper, flag, robot
+    global flag, gripper, arm
     flag = True
-    #robot = moveit_commander.RobotCommander()
     gripper = moveit_commander.MoveGroupCommander("gripper")
     arm = moveit_commander.MoveGroupCommander("arm")
     arm.set_named_target("home")#OK
