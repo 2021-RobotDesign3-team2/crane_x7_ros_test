@@ -15,8 +15,7 @@ from std_msgs.msg import Int32
 global Once_flag_leo
 
 def setup(time, x, y, z):
-    global gripper, arm
-    arm = moveit_commander.MoveGroupCommander("arm")
+    global gripper
     arm.set_max_velocity_scaling_factor(time)
     arm.set_max_acceleration_scaling_factor(1.0)
     gripper = moveit_commander.MoveGroupCommander("gripper")
@@ -34,55 +33,51 @@ def setup(time, x, y, z):
     arm.go()  # 実行
 
 def hand(time, n):
-    # 何かを掴んでいた時のためにハンドを開く
+    # ハンド
     gripper.set_joint_value_target([time, n])
     gripper.go()
 
-
-
 def main():
-    global robot
+    global robot, arm
     robot = moveit_commander.RobotCommander()
+    arm = moveit_commander.MoveGroupCommander("arm")
+    #SRDFに定義されている"home"の姿勢にする
 
-    while len([s for s in rosnode.get_node_names() if 'rviz' in s]) == 0:
-        rospy.sleep(1.0)
-    rospy.sleep(1.0)
+    print("HHHUUUUUUUUUUU")
+    arm.set_named_target("home")#OK
+    arm.go()
 
-    setup(0.5, 0.9, 0.0, 0.3)
     print("GOGO!!")
+    #setup(0.5, 0.9, 0.0, 0.1)#NG
 
     # アーム初期ポーズを表示
-    arm_initial_pose = arm.get_current_pose().pose
-    print("Arm initial pose:", arm_initial_pose)
+    #arm_initial_pose = arm.get_current_pose().pose
+    #print("Arm initial pose:", arm_initial_pose)
 
-    hand(0.1, 0.9)
+    #hand(0.1, 0.9)
+    print("GGAAAAAAAA")
+    #setup(0.3, 0.8, 0.0, 0.1)#NG
+    print("NPPPPPPPPPPPPP")
+    setup(0.3, 0.2, 0.2, 0.3)#OK
+    setup(0.3, 0.2, -0.2, 0.3)#OK
+    setup(0.3, 0.3, 0.0, 0.1)#OK
 
-    # SRDFに定義されている"home"の姿勢にする
-    arm.set_named_target("home")
-    arm.go()
-
-    # ハンドを開く
-    hand(0.7, 0.7)
-
+    # 開く
+    #hand(0.7, 0.7)
     # 掴みに行く
-    setup(0.5, 0.2, 0.0, 0.13)
-
-    # ハンドを閉じる
+    print("OMMMMMMMMMMMMMMM")
+    #setup(0.5, 0.5, 0.0, 0.13)#NG
+    #閉じる
+    '''
     hand(0.4, 0.4)
-
     # 持ち上げる
     setup(0.5, 0.2, 0.0, 0.3)
-
-    # SRDFに定義されている"home"の姿勢にする
-    arm.set_named_target("home")
-    arm.go()
-
+'''
     print("done")
 
 if __name__ == '__main__':
-    Once_flag_leo = True
     rospy.init_node("leo")
+    print("OK!!")
     main()
-    #SUB =rospy.SubscribeListener("activate_node", Int32,sub,queue_size=1)
     rospy.spin()
     
