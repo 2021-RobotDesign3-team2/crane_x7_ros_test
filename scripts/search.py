@@ -38,7 +38,7 @@ def get(topic_x, topic_y):
     if flag:
         complete = True
         flag = False
-        setup(0.7, 0.2+f_y, 0.0+f_x, 0.15)#OK
+        setup(0.7, 0.2+f_y, 0.0+f_x, 0.13)#OK
         setup(0.7, 0.2+f_y, 0.0+f_x, 0.11)#OK
         hand(0.25, 1.0)
 

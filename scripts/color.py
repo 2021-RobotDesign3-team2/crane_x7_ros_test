@@ -41,7 +41,7 @@ class ImageConvert(object):
 
         gray_image = cv2.cvtColor(cv_image_2, cv2.COLOR_BGR2GRAY)
 
-        ret, thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_OTSU)
+        ret, thresh = cv2.threshold(gray_image, 125, 255, cv2.THRESH_OTSU)
 
         contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -52,7 +52,9 @@ class ImageConvert(object):
         coordinates = cv2.moments(contours[0])
         x = int(coordinates["m10"]/coordinates["m00"])
         y = int(coordinates["m01"]/coordinates["m00"])
-        print("move_x:", 320 + 100 - x, "move_y:", 240 - y)
+        neo_x = 320 + 120 - x
+        neo_y = 240 - y
+        print("move_x:", neo_x, "move_y:", neo_y)
         #rate = rospy.Rate(1000)
         #rate.sleep()
         rospy.sleep(0.05) #same time searchmode in main_move.py
@@ -60,11 +62,18 @@ class ImageConvert(object):
         #if flag:
             #flag = False
             #count = count + 1
-        if x < 0:
-            self.publisher_hsv_image_x.publish(320 + 120 - x)
+        if neo_x < 0:
+            self.publisher_hsv_image_x.publish(320 + 70 - x)
+        elif neo_y > 95:
+            self.publisher_hsv_image_y.publish(240 +130 - y)
+        else:
             self.publisher_hsv_image_y.publish(240 - y)
-        if x > 0:
-            self.publisher_hsv_image_x.publish(320 + 0 - x)
+
+        if neo_x > 0:
+            self.publisher_hsv_image_x.publish(320 + 70 - x)
+        elif neo_y > 95:
+            self.publisher_hsv_image_y.publish(240 +130 - y)
+        else:
             self.publisher_hsv_image_y.publish(240 - y)
 
         cv2.rectangle(hsv_image, (x + 10, y + 10), (x -10, y - 10), (255, 255, 0), thickness = 6)

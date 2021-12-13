@@ -79,12 +79,12 @@ class ArmJointTrajectoryExample(object):
         #self.gripper_goal.command.position = math.radians(18.0)
 
         self.setup()
-        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
-        self.setup2(3.0, 100.0, 1)
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-95), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
+        self.setup2(1.0, 100.0, 1)
 
         print("UPUP!!")
         self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-70), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
         self.setup2(1.3, 100.0, 0)
 
         print("YHAAAAAA!!")
