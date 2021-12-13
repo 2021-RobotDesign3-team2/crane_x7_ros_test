@@ -2,14 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-import time
 import actionlib
-import moveit_commander
-import geometry_msgs.msg
-from std_msgs.msg import Float64
-from std_msgs.msg import Int32, Float32
-import message_filters
-import rosnode
+#from std_msgs.msg import Float64
+#from std_msgs.msg import Int32, Float32
 from tf.transformations import quaternion_from_euler
 
 # Arm communication
@@ -26,10 +21,10 @@ from control_msgs.msg import (
 from trajectory_msgs.msg import JointTrajectoryPoint
 import math
 import sys
-import numpy
-import random
-import copy
-import os
+#import numpy
+#import random
+#import copy
+#import os
 
 finish = True
 global Once_flag_nagi
@@ -75,20 +70,27 @@ class ArmJointTrajectoryExample(object):
 
         print("GO!!")
 
+        self.gripper_goal.command.position = math.radians(16.0)
+
         print("PICKUP!!")
+        self.setup()
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
+        self.setup2(3.0, 100.0, 1)
+        #self.gripper_goal.command.position = math.radians(18.0)
+
         self.setup()
         joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
         self.setup2(3.0, 100.0, 1)
 
         print("UPUP!!")
         self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-70), math.radians(-90)] #角度指定部
         self.setup2(1.3, 100.0, 0)
 
         print("YHAAAAAA!!")
         self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-30), math.radians(-90)] #角度指定部
-        self.setup2(0.2, 100.0, 0)
+        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-25), math.radians(-90)] #角度指定部
+        self.setup2(0.1, 100.0, 0)
 
         print("YHAA........")
         self.setup()
@@ -96,18 +98,18 @@ class ArmJointTrajectoryExample(object):
         self.setup2(0.2, 100.0, 0)
 
         effort  = 1
-        self.gripper_goal.command.position = math.radians(60.0)
+        self.gripper_goal.command.position = math.radians(80.0)
         self.gripper_goal.command.max_effort = effort
 
         self.setup()
         joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90)] #角度指定部
-        self.setup2(1.0, 100.0, 1)
+        self.setup2(3.0, 100.0, 1)
 
         self.gripper_goal.command.position = math.radians(0.0)
 
         self.setup()        
         joint_values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #角度指定部
-        self.setup2(1.0, 100.0, 1)
+        self.setup2(3.0, 100.0, 1)
 
         return self._client.get_result()
 
@@ -122,7 +124,7 @@ def main():
     SEARCH_MODE = False
     if Once_flag_nagi:
         Once_flag_nagi = False
-        print("search!")
+        print("GO")
         arm_joint_trajectory_example.go()
 
 if __name__ == "__main__":
