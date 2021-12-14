@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<sdf version="1.6">
+<model name="flypan">
+  <pose>0 0 0.5 0 0 0</pose>
+    <link name="link">
+      <inertial>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>0.002556195217</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.000318732456</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.002542478016</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://flypan/flypan_50x40.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://flypan/flypan_50x40.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
