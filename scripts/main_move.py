@@ -145,20 +145,17 @@ class ArmJointTrajectoryExample(object):
         for i, p in enumerate(joint_values):
             point.positions.append(p)
         
-        point.time_from_start = rospy.Duration(secs=2.0)
+        point.time_from_start = rospy.Duration(secs=0.2)
         goal.trajectory.points.append(point)
         self._client.send_goal(goal)
         self._client.wait_for_result(timeout=rospy.Duration(100.0))
 
-        rospy.sleep(1)
-
-        #とりあえず直立
         point = JointTrajectoryPoint()
         goal = FollowJointTrajectoryGoal()
         goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
         
-        joint_values = [0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0] #角度指定部
-                
+        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90)] #角度指定部
+
         for i, p in enumerate(joint_values):
             point.positions.append(p)
         
@@ -168,6 +165,23 @@ class ArmJointTrajectoryExample(object):
         self._client.wait_for_result(timeout=rospy.Duration(100.0))
 
         rospy.sleep(1)
+
+        #とりあえず直立
+        #point = JointTrajectoryPoint()
+        #goal = FollowJointTrajectoryGoal()
+        #goal.trajectory.joint_names = ["crane_x7_shoulder_fixed_part_pan_joint","crane_x7_shoulder_revolute_part_tilt_joint","crane_x7_upper_arm_revolute_part_twist_joint","crane_x7_upper_arm_revolute_part_rotate_joint","crane_x7_lower_arm_fixed_part_joint","crane_x7_lower_arm_revolute_part_joint","crane_x7_wrist_joint"]
+        
+        #joint_values = [0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0] #角度指定部
+                
+        #for i, p in enumerate(joint_values):
+        #    point.positions.append(p)
+        
+        #point.time_from_start = rospy.Duration(secs=2.0)
+        #goal.trajectory.points.append(point)
+        #self._client.send_goal(goal)
+        #self._client.wait_for_result(timeout=rospy.Duration(100.0))
+
+        #rospy.sleep(1)
 
         return self._client.get_result()
 
