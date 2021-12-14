@@ -11,144 +11,69 @@ from std_msgs.msg import Int32
 
 global Once_flag_leo
 
-def main():
-    rospy.init_node("crane_x7_pick_and_place_controller")
-    robot = moveit_commander.RobotCommander()
-    arm = moveit_commander.MoveGroupCommander("arm")
-    arm.set_max_velocity_scaling_factor(0.1)
+def setup(time, x, y, z):
+    global gripper
+    arm.set_max_velocity_scaling_factor(time)
     arm.set_max_acceleration_scaling_factor(1.0)
     gripper = moveit_commander.MoveGroupCommander("gripper")
 
-    while len([s for s in rosnode.get_node_names() if 'rviz' in s]) == 0:
-        rospy.sleep(1.0)
-    rospy.sleep(1.0)
+    target_pose = geometry_msgs.msg.Pose()
+    target_pose.position.x = x
+    target_pose.position.y = y
+    target_pose.position.z = z
+    q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
+    target_pose.orientation.x = q[0]
+    target_pose.orientation.y = q[1]
+    target_pose.orientation.z = q[2]
+    target_pose.orientation.w = q[3]
+    arm.set_pose_target(target_pose)  # 目標ポーズ設定
+    arm.go()  # 実行
 
-    print("Group names:")
-    print(robot.get_group_names())
+def hand(time, n):
+    # ハンド
+    gripper.set_joint_value_target([time, n])
+    gripper.go()
 
-    print("Current state:")
-    print(robot.get_current_state())
+def main():
+    global robot, arm
+    robot = moveit_commander.RobotCommander()
+    arm = moveit_commander.MoveGroupCommander("arm")
+    #SRDFに定義されている"home"の姿勢にする
+
+    print("HHHUUUUUUUUUUU")
+    arm.set_named_target("home")#OK
+    arm.go()
+
+    print("GOGO!!")
+    #setup(0.5, 0.9, 0.0, 0.1)#NG
 
     # アーム初期ポーズを表示
-    arm_initial_pose = arm.get_current_pose().pose
-    print("Arm initial pose:")
-    print(arm_initial_pose)
+    #arm_initial_pose = arm.get_current_pose().pose
+    #print("Arm initial pose:", arm_initial_pose)
 
-    # 何かを掴んでいた時のためにハンドを開く
-    gripper.set_joint_value_target([0.9, 0.9])
-    gripper.go()
+    #hand(0.1, 0.9)
+    print("GGAAAAAAAA")
+    #setup(0.3, 0.8, 0.0, 0.1)#NG
+    print("NPPPPPPPPPPPPP")
+    setup(0.3, 0.2, 0.2, 0.3)#OK
+    setup(0.3, 0.2, -0.2, 0.3)#OK
+    setup(0.3, 0.3, 0.0, 0.1)#OK
 
-    # SRDFに定義されている"home"の姿勢にする
-    arm.set_named_target("home")
-    arm.go()
-    gripper.set_joint_value_target([0.7, 0.7])
-    gripper.go()
-
-    # 掴む準備をする
-    target_pose = geometry_msgs.msg.Pose()
-    target_pose.position.x = 0.2
-    target_pose.position.y = 0.0
-    target_pose.position.z = 0.3
-    q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    target_pose.orientation.x = q[0]
-    target_pose.orientation.y = q[1]
-    target_pose.orientation.z = q[2]
-    target_pose.orientation.w = q[3]
-    arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    arm.go()  # 実行
-
-    # ハンドを開く
-    #gripper.set_joint_value_target([0.7, 0.7])
-    #gripper.go()
-
+    # 開く
+    #hand(0.7, 0.7)
     # 掴みに行く
-    target_pose = geometry_msgs.msg.Pose()
-    target_pose.position.x = 0.2
-    target_pose.position.y = 0.0
-    target_pose.position.z = 0.13
-    q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    target_pose.orientation.x = q[0]
-    target_pose.orientation.y = q[1]
-    target_pose.orientation.z = q[2]
-    target_pose.orientation.w = q[3]
-    arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    arm.go()  # 実行
-
-    # ハンドを閉じる
-    gripper.set_joint_value_target([0.4, 0.4])
-    gripper.go()
-
+    print("OMMMMMMMMMMMMMMM")
+    #setup(0.5, 0.5, 0.0, 0.13)#NG
+    #閉じる
+    '''
+    hand(0.4, 0.4)
     # 持ち上げる
-    target_pose = geometry_msgs.msg.Pose()
-    target_pose.position.x = 0.2
-    target_pose.position.y = 0.0
-    target_pose.position.z = 0.3
-    q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    target_pose.orientation.x = q[0]
-    target_pose.orientation.y = q[1]
-    target_pose.orientation.z = q[2]
-    target_pose.orientation.w = q[3]
-    arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    arm.go()							# 実行
-
-    # 移動する
-    #target_pose = geometry_msgs.msg.Pose()
-    #target_pose.position.x = 0.2
-    #target_pose.position.y = 0.2
-    #target_pose.position.z = 0.3
-    #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    #target_pose.orientation.x = q[0]
-    #target_pose.orientation.y = q[1]
-    #target_pose.orientation.z = q[2]
-    #target_pose.orientation.w = q[3]
-    #arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    #arm.go()  # 実行
-
-    # 下ろす
-    #target_pose = geometry_msgs.msg.Pose()
-    #target_pose.position.x = 0.2
-    #target_pose.position.y = 0.2
-    #target_pose.position.z = 0.13
-    #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    #target_pose.orientation.x = q[0]
-    #target_pose.orientation.y = q[1]
-    #target_pose.orientation.z = q[2]
-    #target_pose.orientation.w = q[3]
-    #arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    #arm.go()  # 実行
-
-    # ハンドを開く
-    #gripper.set_joint_value_target([0.7, 0.7])
-    #gripper.go()
-
-    # 少しだけハンドを持ち上げる
-    #target_pose = geometry_msgs.msg.Pose()
-    #target_pose.position.x = 0.2
-    #target_pose.position.y = 0.2
-    #target_pose.position.z = 0.2
-    #q = quaternion_from_euler(-3.14, 0.0, -3.14/2.0)  # 上方から掴みに行く場合
-    #target_pose.orientation.x = q[0]
-    #target_pose.orientation.y = q[1]
-    #target_pose.orientation.z = q[2]
-    #target_pose.orientation.w = q[3]
-    #arm.set_pose_target(target_pose)  # 目標ポーズ設定
-    #arm.go()  # 実行
-
-    # SRDFに定義されている"home"の姿勢にする
-    arm.set_named_target("home")
-    arm.go()
-
+    setup(0.5, 0.2, 0.0, 0.3)
+'''
     print("done")
 
-def sub(data):
-    global Once_flag_leo
-    if data.data == 2 and Once_flag_leo:
-        Once_flag_leo = False
-        main()
-
 if __name__ == '__main__':
-    Once_flag_leo = True
     rospy.init_node("leo")
-    SUB =rospy.SubscribeListener("activate_node", Int32,sub,queue_size=1)
+    print("OK!!")
+    main()
     rospy.spin()
-    
