@@ -27,3 +27,5 @@ Inventor（モデルを作成するアプリケーション）などで作成し
 2 model.sdfとmodel.configをデフォルトモデル（wood_cube_5cmとtable）を参考にして作成する。
 <br>
 3 wordファイルを作成する。（この時に作成したモデルの慣性モーメントが必要）
+<br>
+https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/worlds
