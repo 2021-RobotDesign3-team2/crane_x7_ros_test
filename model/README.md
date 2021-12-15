@@ -32,4 +32,8 @@ https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/worlds
 <br>
 4 launchファイルを作成する。
 <br>
+https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/launch
 
+参考にさせて頂いたサイト
+<br>
+https://qiita.com/srs/items/ac242e46177c2b797a7b
