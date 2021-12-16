@@ -34,7 +34,7 @@ https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/worlds
 <br>
 https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/launch
 <br>
-5 
+5 package.xmlを編集し、自分の作成したモデルがあるディレクトリと紐続ける。 
 
 ![image](https://user-images.githubusercontent.com/91268353/146216437-0514c6fa-5f22-4cb5-acc9-1e9399cce0cb.png)
 
