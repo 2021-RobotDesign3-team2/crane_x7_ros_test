@@ -8,6 +8,7 @@ import sys
 from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryGoal
 from control_msgs.msg import GripperCommandAction, GripperCommandGoal
 from trajectory_msgs.msg import JointTrajectoryPoint
+import os
 
 class ArmJointTrajectoryExample(object):
     def __init__(self):
@@ -44,68 +45,23 @@ class ArmJointTrajectoryExample(object):
         self.gripper_client.send_goal(self.gripper_goal,feedback_cb=self.feedback)
         rospy.sleep(sleep)
 
-    def go(self):
+    def set(self):
         global joint_values
-    
-        print("GO!!")
-
-        self.gripper_goal.command.position = math.radians(16.0)
-
-        print("PICKUP!!")
         self.setup()
-        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-70), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
+        joint_values = [0.0, math.radians(0), 0.0, math.radians(-103), 0.0, math.radians(-80), math.radians(-90)] #角度指定部
         self.setup2(3.0, 100.0, 1)
-
-        self.setup()
-        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-95), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
-        self.setup2(1.0, 100.0, 1)
-
-        print("UPUP!!")
-        self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-90), math.radians(-90)] #角度指定部
-        self.setup2(1.3, 100.0, 0)
-
-        print("YHAAAAAA!!")
-        self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-25), math.radians(-90)] #角度指定部
-        self.setup2(0.1, 100.0, 0)
-
-        print("YHAA........")
-        self.setup()
-        joint_values = [0.0, math.radians(20), 0.0, math.radians(-115), 0.0, math.radians(-75), math.radians(-90)] #角度指定部
-        self.setup2(0.2, 100.0, 0)
-
-        effort  = 1
-        self.gripper_goal.command.position = math.radians(80.0)
-        self.gripper_goal.command.max_effort = effort
-
-        self.setup()
-        joint_values = [0.0, math.radians(-20), 0.0, math.radians(-130), 0.0, math.radians(-35), math.radians(-90)] #角度指定部
-        self.setup2(3.0, 100.0, 1)
-
-        self.gripper_goal.command.position = math.radians(0.0)
-
-        self.setup()        
-        joint_values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #角度指定部
-        self.setup2(3.0, 100.0, 1)
-
-        return self._client.get_result()
 
     def feedback(self,msg):
         print("feedback callback")
 
 def main():
-    global completed
-    completed = False
     arm_joint_trajectory_example = ArmJointTrajectoryExample()
     print("GO")
-    if completed:
-        pass
-    else:
-        arm_joint_trajectory_example.go()
+    arm_joint_trajectory_example.set()
+    os.popen("rosrun crane_x7_ros_test search.py")
 
 if __name__ == "__main__":
     print("OK")
-    rospy.init_node("main_move")
+    rospy.init_node("ready")
     main()
     rospy.spin()
