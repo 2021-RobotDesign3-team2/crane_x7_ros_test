@@ -10,7 +10,8 @@ RealSenseから受け取った色画像をカメラ座標に変換するプロ�
 
 ### ready.py  
 
-カメラを下に向け、color.pyを起動するまでのプログラムです。
+カメラを下に向け、search.pyを起動するまでのプログラムです。  
+![ready](https://user-images.githubusercontent.com/71488443/146645299-08b9c7d9-6c6a-4174-8372-9573e84a2098.gif)
 
 ### search.py  
 
