@@ -20,4 +20,6 @@
 <br>
 ・Rviz 1.13.7
 <br>
-・
+・[rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
+<br>
+・[IntelRealSense/realsense-ros](https://github.com/IntelRealSense/realsense-ros)
