@@ -75,10 +75,10 @@ $ rosrun crane_x7_ros_test main_move.py
 ```sh
 $ sudo chmod 666 /dev/ttyUSB*
 ```
-3 [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros/tree/master/crane_x7_bringup/launch)の以下のコードを実行する。
+3 [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_moveit_config/launch/demo.launch)の以下のコードを実行する。
 
 ```sh
-$ roslaunch crane_x7_bringup demo.launch
+$ roslaunch crane_x7_moveit_config demo.launch
 ```
 
 4 本パッケージの以下の2つのコードを順に実行する。
