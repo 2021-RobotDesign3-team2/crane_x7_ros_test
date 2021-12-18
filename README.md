@@ -52,3 +52,16 @@ catkin_make
 このシュミレータではIntelRealSenseを用いた動作はできません。
 <br>
 実際にcrane_x7を動かすときの動作を確認するために使用してください。
+
+1 シュミレータの起動
+
+```sh
+$ roslaunch crane_x7_ros_test crane_x7_with_table_flypan.launch 
+```
+
+2 本パッケージのサンプルコードの実行
+
+```sh
+$ rosrun crane_x7_ros_test main_move.py 
+```
+サンプルコードの詳細は
