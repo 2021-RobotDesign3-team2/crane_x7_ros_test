@@ -34,3 +34,10 @@ cd ~/catkin_ws/src
 git clone https://github.com/rt-net/crane_x7_ros.git  
 ```  
 詳しくは[こちら](https://github.com/rt-net/crane_x7_ros)を参照してください。  
+
+2 本パッケージのインストール
+
+``sh
+cd ~/catkin_ws/src  
+git clone   
+```  
