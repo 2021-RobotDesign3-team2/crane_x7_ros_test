@@ -51,7 +51,7 @@ catkin_make
 
 このシュミレータではIntelRealSenseを用いた動作はできません。
 <br>
-実際にcrane_x7を動かすときの動作を確認するために使用してください。
+実際にCRANE-X7を動かすときの動作を確認するために使用してください。
 
 1 シュミレータの起動
 
@@ -68,6 +68,12 @@ $ rosrun crane_x7_ros_test main_move.py
 
 ### 実機を使う場合
 
-1 realsenseとcrane_x7を接続します。
+1 IntelRealSenseとCRANE-X7を接続します。
 
-2 
+2 CRANE-X7の制御信号ケーブルを制御用パソコンに接続し、以下を実行する。
+
+```sh
+$ sudo chmod 666 /dev/ttyUSB*
+```
+
+
