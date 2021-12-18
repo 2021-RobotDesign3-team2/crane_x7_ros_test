@@ -23,3 +23,14 @@
 ・[rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
 <br>
 ・[IntelRealSense/realsense-ros](https://github.com/IntelRealSense/realsense-ros)
+
+---
+## 環境構築
+
+1 ROSのインストール
+
+```sh
+cd ~/catkin_ws/src  
+git clone https://github.com/rt-net/crane_x7_ros.git  
+```  
+詳しくは[こちら](https://github.com/rt-net/crane_x7_ros)を参照してください。  
