@@ -65,3 +65,9 @@ $ roslaunch crane_x7_ros_test crane_x7_with_table_flypan.launch
 $ rosrun crane_x7_ros_test main_move.py 
 ```
 サンプルコードの詳細は[crane_x7_ros_test/scripts](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/scripts)を参照してください。
+
+### 実機を使う場合
+
+1 realsenseとcrane_x7を接続します。
+
+2 
