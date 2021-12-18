@@ -37,7 +37,7 @@ git clone https://github.com/rt-net/crane_x7_ros.git
 
 2 本パッケージのインストール
 
-``sh
+```sh
 cd ~/catkin_ws/src  
 git clone  https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test
 cd ~/catkin_ws
