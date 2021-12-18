@@ -7,7 +7,7 @@
 
  ## 実装内容
  
- crane_x7を用いてフライパンのフライ返しを動きをさせるサンプルコードです。
+ [crane_x7](https://rt-net.jp/products/crane-x7/)を用いてフライパンのフライ返しを動きをさせるサンプルコードです。
  <br>
  crane_x7とIntelRealSenseを用いて実機動作を行っています。
  
