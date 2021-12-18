@@ -43,3 +43,12 @@ git clone  https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test
 cd ~/catkin_ws
 catkin_make
 ```  
+
+---
+## 実行方法
+
+### シュミレータを使う場合
+
+このシュミレータではIntelRealSenseを用いた動作はできません。
+<br>
+実際にcrane_x7を動かすときの動作を確認するために使用してください。
