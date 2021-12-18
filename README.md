@@ -12,3 +12,6 @@
  crane_x7とIntelRealSenseを用いて実機動作を行っています。
  
  ---
+## 動作環境
+
+・ubuntu 20.04.3LTS  or  ubuntu 18.04.5LTS
