@@ -53,3 +53,11 @@ $ rosrun crane_x7_ros_test main_move.py
 角度制御でアームを動かしています。  
 ![main_move](https://user-images.githubusercontent.com/71488443/146658587-4e80f99c-eefb-488c-ac66-16f43f750b95.gif)
 
+---  
+### 使用・参考にしたコード一覧  
+|コード引用元|著作権者|元のライセンス|
+|:---:|:---:|:---:|
+|[color.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/color.py)|OpenCV|[Apache License 2.0](https://github.com/opencv/opencv/blob/4.x/LICENSE)|
+|[color.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/color.py)/[main_move.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/main_move.py)/[ready.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/ready.py)/[search.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/search.py)|Robot Operating System|[BSD-3-Clause License](https://github.com/ros/ros/blob/noetic-devel/LICENSE)|
+|[color.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/color.py)|[robotcreating2021-1](https://github.com/robotcreating2020-1/cola_with_crane_x7_ros/tree/master)|[BSD-3-Clause License](https://github.com/robotcreating2020-1/cola_with_crane_x7_ros/blob/master/LICENSE)|
+|[main_move.py](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/blob/main/scripts/main_move.py)|[8group-robotdesign3](https://github.com/8group-robotdesign3/crane_x7_ros_modified_by_group8)|[LICENCE](https://github.com/8group-robotdesign3/crane_x7_ros_modified_by_group8/blob/master/LICENSE)|
