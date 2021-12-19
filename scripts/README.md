@@ -5,19 +5,36 @@
 ## 実装内容
 
 ### color.py  
+実行方法
+```  
+$ rosrun crane_x7_ros_test color.py  
+```  
 
 RealSenseから受け取った色画像をカメラ座標に変換するプログラムです。  
 青色の重心をカメラ座標として画面中央からどれだけずれているかx/y座標をPublishしています。分かりやすいように水色でマークしています。  
 
-![color](https://user-images.githubusercontent.com/71488443/146658743-bf92baa9-8963-40da-93b2-385ffefd5f0d.gif)
+![color](https://user-images.githubusercontent.com/71488443/146658743-bf92baa9-8963-40da-93b2-385ffefd5f0d.gif)  
+
+実行時に青色が検出されずERRORが出た場合、カメラの前に青色を用意してください。  
+
 
 ### ready.py  
+
+実行方法
+```  
+$ rosrun crane_x7_ros_test ready.py  
+```  
 
 カメラを下に向け、search.pyを起動するまでのプログラムです。  
 角度制御でアームを動かしています。  
 ![ready](https://user-images.githubusercontent.com/71488443/146658376-03381f92-7338-4c2e-b58a-268dcd97c92d.gif)
 
 ### search.py  
+
+実行方法
+```  
+$ rosrun crane_x7_ros_test search.py  
+```  
 
 カメラ座標をアーム座標に変換し、フライパンを認識して掴み、main_move.pyを起動するプログラムです。  
 位置制御でアームを動かしています。  
@@ -26,6 +43,11 @@ color.pyが動いている必要があります。
 
 
 ### main_move.py
+
+実行方法
+```  
+$ rosrun crane_x7_ros_test main_move.py  
+```  
 
 フライパンを持ち上げフライ返しをし、フライパンを置いて最初の姿勢に戻るプログラムです。  
 角度制御でアームを動かしています。  
