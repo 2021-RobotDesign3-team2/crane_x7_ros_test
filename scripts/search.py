@@ -12,7 +12,7 @@ from std_msgs.msg import Float32
 import message_filters
 import os
 
-#color.pyからローカル座標を受け取る
+#color.pyからカメラ座標を受け取る
 def search():
     global completed
     sub_x = message_filters.Subscriber("subscribed_image_color_x", Float32)
@@ -24,14 +24,14 @@ def search():
     else:
         sub_n.registerCallback(get)
 
-#受け取ったローカル座標をグローバル座標に変換してアプローチする
+#受け取ったカメラ座標をアーム座標に変換してアプローチする
 def get(topic_x, topic_y):
     global completed, arm, flag, finished_x, finished_y
     #global robot
     inversion = -1 #カメラが逆さに付いているので
-    ratio_cm = 0.05 #[cm] あるローカル座標の値のときのグローバル座標のずれ
-    ratio_px_x = 177 #[px] あるグローバル座標の値の時のローカル座標の値
-    ratio_px_y = 180 #ratio_px_xと同じ
+    ratio_cm = 0.05 #[cm] あるカメラ座標の値のときのアーム座標のずれ
+    ratio_px_x = -177 #[px] あるアーム座標の値の時のカメラ座標の値
+    ratio_px_y = -180 #ratio_px_xと同じ
     #1回目は座標変換を行う
     if completed:
         pass
@@ -64,8 +64,8 @@ def main():
     completed = False
     gripper = moveit_commander.MoveGroupCommander("gripper")
     arm = moveit_commander.MoveGroupCommander("arm")
-    hand(1.0, 1.0) #RealSenseの邪魔にならないようハンドを大きく開く
-    search() #ローカル座標取得
+    hand(1.0, 1.0) #search.pyが動いていることをわかりやすくするためハンドを大きく開く
+    search() #カメラ座標取得
 
 #アームを動かす関数
 def setup(time, x, y, z):

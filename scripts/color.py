@@ -68,22 +68,22 @@ class ImageConvert(object):
         px_y = 480 / 2 #色画像のy座標の中心点
         error_px_x = 70 #RealSenseの中心からのカメラズレ
         error_px_y = 90 #手前方向にフライパンがあった時にきれいにアプローチできるようにする
-        neo_x = px_x + error_px_x - x #xローカル座標
-        neo_y = px_y - y #yローカル座標
+        neo_x = x - px_x - error_px_x #xローカル座標
+        neo_y = y - px_y #yカメラ座標
         print("move_x:", neo_x, "move_y:", neo_y)
 
-        #ローカル座標の誤差修正
+        #カメラ座標の誤差修正
         if neo_x < 0:
             self.publisher_hsv_image_x.publish(neo_x)
         elif neo_y > 75:
-            self.publisher_hsv_image_y.publish(neo_y + error_px_y)
+            self.publisher_hsv_image_y.publish(neo_y - error_px_y)
         else:
             self.publisher_hsv_image_y.publish(neo_y)
 
         if neo_x > 0:
             self.publisher_hsv_image_x.publish(neo_x)
         elif neo_y > 75:
-            self.publisher_hsv_image_y.publish(neo_y + error_px_y)
+            self.publisher_hsv_image_y.publish(neo_y - error_px_y)
         else:
             self.publisher_hsv_image_y.publish(neo_y)
 
