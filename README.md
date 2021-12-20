@@ -14,12 +14,13 @@
  ---
 ## 動作環境
 
+- Ubuntu 18.04.6LTS  
 - ROS Melodic  
-    - Ubuntu 18.04.6LTS  
-    - Gazebo 11.5.1  
-    - Rviz 1.13.19  
+    - Gazebo 9.0.0+dfsg5-3ubuntu1+ppa2  
+    - Rviz 1.12.4+dfsg-3  
+    - MoveIt 1.0.8-1  
     - RealSense SDK 2.0  
-    - OpneCV 3.2.0
+- OpneCV 4.5.1
 
 ---
 ## 環境構築
