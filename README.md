@@ -14,15 +14,12 @@
  ---
 ## 動作環境
 
-・ubuntu 20.04.3LTS  or  ubuntu 18.04.5LTS
-<br>
-・Gazebo 11.5.1
-<br>
-・Rviz 1.13.7
-<br>
-・[rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros)
-<br>
-・[IntelRealSense/realsense-ros](https://github.com/IntelRealSense/realsense-ros)
+- ROS Melodic  
+    - Ubuntu 18.04.6LTS  
+    - Gazebo 11.5.1  
+    - Rviz 1.13.19  
+    - RealSense SDK 2.0  
+    - OpneCV 3.2.0
 
 ---
 ## 環境構築
@@ -79,9 +76,14 @@ $ sudo chmod 666 /dev/ttyUSB*
 
 ```sh
 $ roslaunch crane_x7_moveit_config demo.launch
-```
+```  
+4 color.pyを実行する前に以下のコードを実行する。  
+```  
+$ roslaunch realsense2_camera rs_camera.launch  
+```  
 
-4 本パッケージの以下の2つのコードを順に実行する。
+5 本パッケージの以下の2つのコードを順に実行する。  
+ready.pyを実行するとcrane_x7が動き出します。
 
 ```sh
 $ rosrun crane_x7_ros_test color.py
