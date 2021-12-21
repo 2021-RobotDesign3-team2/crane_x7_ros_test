@@ -131,8 +131,7 @@ $ rosrun crane_x7_ros_test main_move.py
 
 ![image](https://user-images.githubusercontent.com/91268353/146878311-86ecc456-c7db-422e-9c56-37abd7a97057.png)
 
-![iOS の画像 (2) (1)](https://user-images.githubusercontent.com/91268353/146890295-7ff7b9e3-a9f2-4ec6-88d8-9e4ef5dbca3d.jpg)
-
+![image](https://user-images.githubusercontent.com/91268353/146891460-f7d75dba-8c1a-4321-b5fb-242e5a3efb80.png)
 1 IntelRealSenseとCRANE-X7を接続します。
 
 2 CRANE-X7の制御信号ケーブルを制御用パソコンに接続し、以下を実行する。
