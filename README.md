@@ -57,9 +57,7 @@ $ cd ..
 $ catkin_make
 $ vi ~/.bashrc
 source /opt/ros/melodic/setup.bash
-<br>
 source ~/catkin_ws/devel/setup.bash       #この行を追加
-<br>
 export ROS_MASTER_URI=http://localhost:11311
 $ source ~/.bashrc
 $ cd ~/catkin_ws/
@@ -90,11 +88,11 @@ $ rviz
 ```sh
 $ mkdir ~/.ignition/fuel
 $ vi config.yaml
-```
 config.yamlに以下を追加
-
-
-```sh
+servers:
+-
+  name: osrf
+  url: https://api.ignitionrobotics.org
 $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
 ```
   
