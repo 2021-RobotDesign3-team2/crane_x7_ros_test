@@ -58,7 +58,9 @@ $ catkin_make
 $ vi ~/.bashrc
 ```
 source /opt/ros/melodic/setup.bash
+<br>
 source ~/catkin_ws/devel/setup.bash       #この行を追加
+<br>
 export ROS_MASTER_URI=http://localhost:11311
 
 ```sh
@@ -92,6 +94,7 @@ $ rviz
 $ mkdir ~/.ignition/fuel
 $ vi config.yaml
 ```
+
 config.yamlに以下を追加
 <br>
 servers:
