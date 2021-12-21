@@ -28,18 +28,87 @@
 1 ROSのインストール
 
 ```sh
-cd ~/catkin_ws/src  
-git clone https://github.com/rt-net/crane_x7_ros.git  
-```  
-詳しくは[こちら](https://github.com/rt-net/crane_x7_ros)を参照してください。  
+$ git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_desktop.git
+$ cd ros_setup_scripts_Ubuntu18.04_desktop/
+$ sudo apt update
+$ sudo apt upgrade
+$ ./locale.ja.bash
+$ ./step0.bash
+$ ./step1.bash
+```
 
-2 本パッケージのインストール
+2 動作確認
 
 ```sh
-cd ~/catkin_ws/src  
-git clone  https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test
-cd ~/catkin_ws
-catkin_make
+$ cd     
+$ source ~/.bashrc
+$ roscore
+```
+Ctrl+Cでプログラムの終了
+
+3 ワークスペースを作成し、~/.bashrcを編集
+
+```sh
+$ cd
+$ mkdir -p catkin_ws/src
+$ cd ~/catkin_ws/src/
+$ catkin_init_workspace
+$ cd ..
+$ catkin_make
+$ vi ~/.bashrc
+```
+source /opt/ros/melodic/setup.bash
+source ~/catkin_ws/devel/setup.bash       #この行を追加
+export ROS_MASTER_URI=http://localhost:11311
+
+```sh
+$ source ~/.bashrc
+$ cd ~/catkin_ws/
+$ catkin_make
+```
+
+4 CRANE-X7のROSパッケージのインストール
+
+```sh
+$ cd ~/catkin_ws/src/  
+$ git clone https://github.com/rt-net/crane_x7_ros.git
+$ git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
+$ rosdep install -r -y --from-paths --ignore-src crane_x7_ros
+$ ( cd ~/catkin_ws/ && catkin_make )
+```  
+詳しくは[こちら](https://github.com/rt-net/crane_x7_ros)を参照してください。
+
+5 RVISの動作確認
+
+```sh
+$ source ~/.bashrc
+$ roscore &
+$ rviz
+```
+
+6 GAZEBOの動作確認
+
+```sh
+$ mkdir ~/.ignition/fuel
+$ vi config.yaml
+```
+config.yamlに以下を追加
+servers:
+-
+  name: osrf
+  url: https://api.ignitionrobotics.org 
+
+```sh
+$ roslaunch crane_x7_gazebo crane_x7_with_table.launch
+```
+  
+7 本パッケージのインストール
+
+```sh
+$ cd ~/catkin_ws/src  
+$ git clone  https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test
+$ cd ~/catkin_ws
+$ catkin_make
 ```  
 
 ---
