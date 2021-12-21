@@ -94,16 +94,8 @@ $ rviz
 $ mkdir ~/.ignition/fuel
 $ vi config.yaml
 ```
+config.yamlに以下を追加
 
- config.yamlに以下を追加
-<br>
- servers:
-<br>
- -
-<br>
-   name: osrf
-<br>
-   url: https://api.ignitionrobotics.org 
 
 ```sh
 $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
