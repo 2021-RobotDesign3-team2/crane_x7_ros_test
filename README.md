@@ -129,7 +129,11 @@ $ rosrun crane_x7_ros_test main_move.py
 
 ### 実機を使う場合
 
+#### 配置図
+
 ![image](https://user-images.githubusercontent.com/91268353/146878311-86ecc456-c7db-422e-9c56-37abd7a97057.png)
+
+#### RealSense取り付け
 
 ![image](https://user-images.githubusercontent.com/91268353/146891925-90624bb3-fa94-42d2-acd2-c9f7683c0403.png)
 
