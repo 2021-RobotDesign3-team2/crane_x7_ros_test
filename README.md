@@ -56,14 +56,11 @@ $ catkin_init_workspace
 $ cd ..
 $ catkin_make
 $ vi ~/.bashrc
-```
 source /opt/ros/melodic/setup.bash
 <br>
 source ~/catkin_ws/devel/setup.bash       #この行を追加
 <br>
 export ROS_MASTER_URI=http://localhost:11311
-
-```sh
 $ source ~/.bashrc
 $ cd ~/catkin_ws/
 $ catkin_make
