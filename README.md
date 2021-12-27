@@ -108,7 +108,12 @@ $ catkin_make
 8 RealSenseのセットアップ  
 [こちら](https://demura.net/robot/16525.html)のサイトを元にRealSense SDKとROSラッパーのインストールをしてください。
 
-9  
+9 OpenCVのインストール  
+```  
+$ wget --no-check-certificate https://raw.githubusercontent.com/milq/milq/master/scripts/bash/install-opencv.sh  
+$ chmod +x install-opencv.sh
+$ ./install-opencv.sh
+```  
 
 ---
 ## 実行方法
