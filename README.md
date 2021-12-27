@@ -9,7 +9,7 @@
  
  [crane_x7](https://rt-net.jp/products/crane-x7/)を用いてフライパンのフライ返しを動きをさせるサンプルコードです。
  <br>
- crane_x7とIntelRealSenseを用いて実機動作を行っています。
+ crane_x7とIntelRealSenseD435を用いて実機動作を行っています。
  
  ---
 ## 動作環境
@@ -27,7 +27,7 @@
 
 1 ROSのインストール
 
-```sh
+```  
 $ git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_desktop.git
 $ cd ros_setup_scripts_Ubuntu18.04_desktop/
 $ sudo apt update
@@ -39,7 +39,7 @@ $ ./step1.bash
 
 2 動作確認
 
-```sh
+```  
 $ cd     
 $ source ~/.bashrc
 $ roscore
@@ -48,7 +48,7 @@ Ctrl+Cでプログラムの終了
 
 3 ワークスペースを作成し、~/.bashrcを編集
 
-```sh
+```  
 $ cd
 $ mkdir -p catkin_ws/src
 $ cd ~/catkin_ws/src/
@@ -66,7 +66,7 @@ $ catkin_make
 
 4 CRANE-X7のROSパッケージのインストール
 
-```sh
+```  
 $ cd ~/catkin_ws/src/  
 $ git clone https://github.com/rt-net/crane_x7_ros.git
 $ git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
@@ -77,7 +77,7 @@ $ ( cd ~/catkin_ws/ && catkin_make )
 
 5 RVISの動作確認
 
-```sh
+```  
 $ source ~/.bashrc
 $ roscore &
 $ rviz
@@ -85,7 +85,7 @@ $ rviz
 
 6 GAZEBOの動作確認
 
-```sh
+```  
 $ mkdir ~/.ignition/fuel
 $ vi config.yaml
 config.yamlに以下を追加
@@ -98,7 +98,7 @@ $ roslaunch crane_x7_gazebo crane_x7_with_table.launch
   
 7 本パッケージのインストール
 
-```sh
+```  
 $ cd ~/catkin_ws/src  
 $ git clone  https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test
 $ cd ~/catkin_ws
@@ -113,6 +113,7 @@ $ catkin_make
 $ wget --no-check-certificate https://raw.githubusercontent.com/milq/milq/master/scripts/bash/install-opencv.sh  
 $ chmod +x install-opencv.sh
 $ ./install-opencv.sh
+$ sudo apt-get install ros-melodic-cv-bridge
 ```  
 
 ---
@@ -126,13 +127,13 @@ $ ./install-opencv.sh
 
 1 シュミレータの起動
 
-```sh
+```  
 $ roslaunch crane_x7_ros_test crane_x7_with_table_flypan.launch 
 ```
 
 2 本パッケージのサンプルコードの実行
 
-```sh
+```  
 $ rosrun crane_x7_ros_test main_move.py 
 ```
 サンプルコードの詳細は[crane_x7_ros_test/scripts](https://github.com/2021-RobotDesign3-team2/crane_x7_ros_test/tree/main/scripts)を参照してください。
@@ -140,10 +141,12 @@ $ rosrun crane_x7_ros_test main_move.py
 ### 実機を使う場合
 
 #### 配置図
+以下の図の範囲内にフライパンの持ち手が半分以上入っている必要があります  
 
 ![image](https://user-images.githubusercontent.com/91268353/146878311-86ecc456-c7db-422e-9c56-37abd7a97057.png)
 
 #### RealSense取り付け
+ネジのズレ、RealSenseの向きに注意し,以下の図のように取り付けてください。  
 
 ![image](https://user-images.githubusercontent.com/91268353/146891925-90624bb3-fa94-42d2-acd2-c9f7683c0403.png)
 
@@ -151,12 +154,12 @@ $ rosrun crane_x7_ros_test main_move.py
 
 2 CRANE-X7の制御信号ケーブルを制御用パソコンに接続し、以下を実行する。
 
-```sh
+```  
 $ sudo chmod 666 /dev/ttyUSB*
 ```
 3 [rt-net/crane_x7_ros](https://github.com/rt-net/crane_x7_ros/blob/master/crane_x7_moveit_config/launch/demo.launch)の以下のコードを実行する。
 
-```sh
+```  
 $ roslaunch crane_x7_moveit_config demo.launch
 ```  
 4 color.pyを実行する前に以下のコードを実行する。  
@@ -167,7 +170,7 @@ $ roslaunch realsense2_camera rs_camera.launch
 5 本パッケージの以下の2つのコードを順に実行する。  
 ready.pyを実行するとcrane_x7が動き出します。
 
-```sh
+```  
 $ rosrun crane_x7_ros_test color.py
 $ rosrun crane_x7_ros_test ready.py
 ```
