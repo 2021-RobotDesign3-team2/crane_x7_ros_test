@@ -105,6 +105,11 @@ $ cd ~/catkin_ws
 $ catkin_make
 ```  
 
+8 RealSenseのセットアップ  
+[こちら](https://demura.net/robot/16525.html)のサイトを元にRealSense SDKとROSラッパーのインストールをしてください。
+
+9  
+
 ---
 ## 実行方法
 
