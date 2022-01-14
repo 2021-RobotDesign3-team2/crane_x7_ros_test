@@ -75,7 +75,7 @@ $ ( cd ~/catkin_ws/ && catkin_make )
 ```  
 詳しくは[こちら](https://github.com/rt-net/crane_x7_ros)を参照してください。
 
-5 RVISの動作確認
+5 RVIZの動作確認
 
 ```  
 $ source ~/.bashrc
